@@ -1,0 +1,15 @@
+The 'GPIO' project is a simple program for the MAX32660
+microcontroller using the Maxim Integrated MAX32660 Evaluation
+Kit.
+
+Example functionality:
+  -  Uses GPIO as inputs and outputs
+
+  -  The example reads P0.12 (S1) and outputs the input value onto
+     P0.13 (DS1).
+
+  -  Uses the GPIO IRQ and responds to events on P0.3.
+     *  When P0.3 changes state, the IRQ handler toggles P0.2.
+
+  -  Status is transmitted via stdout using UART0 to
+     a host terminal at 115,200 Baud, 8N1.
