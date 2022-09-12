@@ -62,7 +62,7 @@
 #define ADC_CH_SEL_PIN_OUT					PIN_7
 
 #define ADC_SPI_CIPO_PORT_IN				PORT_0
-#define ADC_SPI_CIPO_PIN_IN					PIN_5 // !!! NEEDS TO BE CHANGED TO PIN_0 after Debugging
+#define ADC_SPI_CIPO_PIN_IN					PIN_0 // !!! NEEDS TO BE CHANGED TO PIN_0 after Debugging
 
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
@@ -83,6 +83,11 @@ gpio_cfg_t adc_spi_ch_sel_out;
 
 /* **** Functions **** */
 
+void GPIO_SerialWireDebugDisable(void)
+{
+    MXC_GCR->scon |= MXC_S_GCR_SCON_SWD_DIS_DISABLE;
+}
+
 #define SAMPLE_CYCLES 16
 		// Creates a string output of the binary input
 void print_binary(uint16_t data_in) {
@@ -102,7 +107,7 @@ double bit_bang_spi(uint16_t* _rx_low, uint16_t* _rx_high)  // This function tra
 {
 	double execution_time_us = 0;
 	GPIO_OutSet(&adc_spi_clk_out);
-	mxc_delay(MXC_DELAY_USEC(1)); 	// t2 > 5ns
+	mxc_delay(MXC_DELAY_USEC(10)); 	// t2 > 5ns
 	GPIO_OutClr(&adc_spi_csb_out); 	// CS_B low
 	mxc_delay(MXC_DELAY_USEC(1)); 	// t2 > 5ns
 
@@ -110,8 +115,9 @@ double bit_bang_spi(uint16_t* _rx_low, uint16_t* _rx_high)  // This function tra
 	for(int16_t idx = SAMPLE_CYCLES-1; idx >= 2; idx--)
 	{
 		GPIO_OutClr(&adc_spi_clk_out);        // SS low                   // SCK low
-		mxc_delay(MXC_DELAY_USEC(1)); // t2 > 5ns
+		mxc_delay(MXC_DELAY_USEC(10)); // t2 > 5ns
 		GPIO_OutSet(&adc_spi_clk_out);
+		mxc_delay(MXC_DELAY_USEC(10)); // t2 > 5ns
 		bitWrite((*_rx_high), idx, GPIO_InGet(&adc_spi_cipo_in)); // Capture CIPO
 	} 
 	elapsed_time_stop(0);
@@ -120,18 +126,12 @@ double bit_bang_spi(uint16_t* _rx_low, uint16_t* _rx_high)  // This function tra
 	return execution_time_us;        // Return the received data
 }
 
-//void gpio_isr(void *cbdata)
-//{
-//    GPIO_OutToggle((gpio_cfg_t*)cbdata);
-//}
-
 /* ########################################################################### */
 /* ########################################################################### */
 #define VDD 3.3F
 #define BITS_RESOLUTION 12U
 int main(void)
 {
-
 		uint16_t rx_low = 0;
 		uint16_t rx_high = 0;
 		uint16_t rx_high_12b = 0;
@@ -141,37 +141,16 @@ int main(void)
 		char a_in_ch[] = "AIN_CH1";
 
     printf("\n\n***** MAX32660 to MAX19777 ADC Example ******\n\n");
-{
-//    gpio_cfg_t gpio_interrupt;
-//    gpio_cfg_t gpio_interrupt_status;
 
-//    /* Setup interrupt status pin as an output so we can toggle it on each interrupt. */
-//    gpio_interrupt_status.port = GPIO_PORT_INTERRUPT_STATUS;
-//    gpio_interrupt_status.mask = GPIO_PIN_INTERRUPT_STATUS;
-//    gpio_interrupt_status.pad = GPIO_PAD_NONE;
-//    gpio_interrupt_status.func = GPIO_FUNC_OUT;
-//    GPIO_Config(&gpio_interrupt_status);
-
-    /* Set up interrupt on P0.3. */
-    /* Switch on EV kit is open when non-pressed, and grounded when pressed.  Use an internal pull-up so pin
-       reads high when button is not pressed. */
-//    gpio_interrupt.port = GPIO_PORT_INTERRUPT_IN;
-//    gpio_interrupt.mask = GPIO_PIN_INTERRUPT_IN;
-//    gpio_interrupt.pad = GPIO_PAD_PULL_UP;
-//    gpio_interrupt.func = GPIO_FUNC_IN;
-//    GPIO_Config(&gpio_interrupt);
-//    GPIO_RegisterCallback(&gpio_interrupt, gpio_isr, &gpio_interrupt_status);
-//    GPIO_IntConfig(&gpio_interrupt, GPIO_INT_EDGE, GPIO_INT_FALLING);
-//    GPIO_IntEnable(&gpio_interrupt);
-//    NVIC_EnableIRQ((IRQn_Type)MXC_GPIO_GET_IRQ(GPIO_PORT_INTERRUPT_IN));
-}
+		GPIO_SerialWireDebugDisable();
 
     /* Setup input pin. */
     /* Switch on EV kit is open when non-pressed, and grounded when pressed.  Use an internal pull-up so pin
        reads high when button is not pressed. */
+
     adc_spi_cipo_in.port = ADC_SPI_CIPO_PORT_IN;
     adc_spi_cipo_in.mask = ADC_SPI_CIPO_PIN_IN;
-    adc_spi_cipo_in.pad = GPIO_PAD_PULL_UP;
+    adc_spi_cipo_in.pad = GPIO_PAD_NONE;
     adc_spi_cipo_in.func = GPIO_FUNC_IN;
     GPIO_Config(&adc_spi_cipo_in);
 
