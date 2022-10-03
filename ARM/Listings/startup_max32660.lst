@@ -773,23 +773,23 @@ ARM Macro Assembler    Page 12
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
 interwork --depend=.\objects\startup_max32660.d -o.\objects\startup_max32660.o 
--I.\RTE\Device\MAX32660 -I.\RTE\_Debug -IC:\Users\gemoore\AppData\Local\Arm\Pac
-ks\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\gemoore\AppData\Local\Arm\Pack
-s\Maxim\MAX32660\1.4.0\Boards\Maxim\MAX32660_EVKIT\Common\EvKit_V1\Include -IC:
-\Users\gemoore\AppData\Local\Arm\Packs\Maxim\MAX32660\1.4.0\Boards\Maxim\MAX326
-60_EVKIT\Common\Include -IC:\Users\gemoore\AppData\Local\Arm\Packs\Maxim\MAX326
+-I.\RTE\Device\MAX32660 -I.\RTE\_Release -IC:\Users\gemoore\AppData\Local\Arm\P
+acks\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Users\gemoore\AppData\Local\Arm\Pa
+cks\Maxim\MAX32660\1.4.0\Boards\Maxim\MAX32660_EVKIT\Common\EvKit_V1\Include -I
+C:\Users\gemoore\AppData\Local\Arm\Packs\Maxim\MAX32660\1.4.0\Boards\Maxim\MAX3
+2660_EVKIT\Common\Include -IC:\Users\gemoore\AppData\Local\Arm\Packs\Maxim\MAX3
 
 
 
 ARM Macro Assembler    Page 13 
 
 
-60\1.4.0\Libraries\Device\Maxim\MAX32660\Include -IC:\Users\gemoore\AppData\Loc
-al\Arm\Packs\Maxim\MAX32660\1.4.0\Libraries\MAX32660PeriphDriver\Include --pred
-efine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VE
-RSION SETA 537" --predefine="_RTE_ SETA 1" --predefine="MAX32660 SETA 1" --pred
-efine="_RTE_ SETA 1" --list=.\listings\startup_max32660.lst RTE/Device/MAX32660
-/startup_max32660.s
+2660\1.4.0\Libraries\Device\Maxim\MAX32660\Include -IC:\Users\gemoore\AppData\L
+ocal\Arm\Packs\Maxim\MAX32660\1.4.0\Libraries\MAX32660PeriphDriver\Include --pr
+edefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_
+VERSION SETA 537" --predefine="_RTE_ SETA 1" --predefine="MAX32660 SETA 1" --pr
+edefine="_RTE_ SETA 1" --list=.\listings\startup_max32660.lst RTE/Device/MAX326
+60/startup_max32660.s
 
 
 

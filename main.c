@@ -62,7 +62,7 @@
 #define ADC_CH_SEL_PIN_OUT					PIN_7
 
 #define ADC_SPI_CIPO_PORT_IN				PORT_0
-#define ADC_SPI_CIPO_PIN_IN					PIN_0 // !!! NEEDS TO BE CHANGED TO PIN_0 after Debugging
+#define ADC_SPI_CIPO_PIN_IN					PIN_0
 
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
@@ -71,6 +71,12 @@
 
 #define ADC_OUT_SLOPE_CALIBRATION 			0.993F
 #define ADC_OUT_INTERCEPT_CALIBRATION 	-0.0005F
+
+
+/* 
+	For UART_TX:
+	If CONSOLE_UART_DEBUG = 0 and console_uart_sys_cfg = {MAP_A, UART_FLOW_DISABLE};, => UART_TX = P0_4 
+*/
 
 /* **** Globals **** */
 
